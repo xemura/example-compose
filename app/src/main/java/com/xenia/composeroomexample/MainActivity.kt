@@ -2,11 +2,9 @@ package com.xenia.composeroomexample
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
@@ -24,14 +22,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +60,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ListItem(name : String, prof: String) {
+    var counter = remember {
+        mutableStateOf(0)
+    }
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -72,6 +73,7 @@ fun ListItem(name : String, prof: String) {
                 }
             }
             .clickable {
+                counter.value++
                 Log.d("Tag", "click")
             },
         shape = RoundedCornerShape(15.dp),
@@ -79,7 +81,7 @@ fun ListItem(name : String, prof: String) {
             defaultElevation = 5.dp
         )
     ) {
-        Box() {
+        Box {
             Row (verticalAlignment = Alignment.CenterVertically) {
                 Image (painterResource(id = R.drawable.img),
                     contentDescription = "image",
@@ -89,7 +91,7 @@ fun ListItem(name : String, prof: String) {
                         .size(64.dp)
                         .clip(CircleShape))
                 Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(text = name)
+                    Text(text = counter.value.toString())
                     Text(text = prof)
                 }
             }
