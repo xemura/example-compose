@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
             }
             ListItem()
 
-            MainScreen()
+            MainScreen(applicationContext)
         }
     }
 }
