@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,12 +16,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.xenia.composeroomexample.bottom_navigation.MainScreen
+import com.xenia.composeroomexample.ui.theme.MyLightGray
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(MyLightGray)) {
+
+            }
             ListItem()
+
+            MainScreen()
         }
     }
 }
@@ -44,22 +54,19 @@ fun getList(): List<ItemRowModel> {
 
 @Composable
 fun ListItem() {
-    LazyRow(modifier = Modifier.fillMaxWidth().background(Color.LightGray)) {
-        itemsIndexed(
-            getList()
-        ) { _, item ->
+    LazyRow(modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 5.dp, start = 5.dp, end = 5.dp)) {
+        itemsIndexed( getList() ) { _, item ->
             ItemRowFun(item = item)
         }
     }
 
-    LazyColumn(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 100.dp).background(Color.LightGray)
-    ) {
-        itemsIndexed(getList())
-        { _, item ->
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .padding(top = 100.dp, start = 5.dp, end = 5.dp))
+    {
+        itemsIndexed( getList() ) { _, item ->
             ItemColumnFun(item = item)
         }
     }
