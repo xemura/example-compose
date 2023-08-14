@@ -23,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.xenia.composeroomexample.DrawerBody
+import com.xenia.composeroomexample.DrawerNavigation
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -54,7 +56,9 @@ fun MainScreen(context: Context) {
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            Toast.makeText(context,"menu", Toast.LENGTH_SHORT).show()
+                            coroutineScope.launch {
+                                scaffoldState.drawerState.open()
+                            }
                         }
                     ) {
                         Icon(imageVector = Icons.Filled.Menu, contentDescription = null)
@@ -84,7 +88,12 @@ fun MainScreen(context: Context) {
                 }
             )
         },
-        bottomBar = {BottomNavigation(navController = navController)}
+        bottomBar = {BottomNavigation(navController = navController)},
+        drawerContent = {
+            DrawerNavigation()
+            DrawerBody()
+        }
+
     ) {
         NavGraph(navHostController = navController)
     }
